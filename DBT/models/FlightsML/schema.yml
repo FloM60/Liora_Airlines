@@ -1,0 +1,250 @@
+
+version: 2
+
+sources:
+  - name: DatasetSilver
+    database: "{{ target.database }}"
+    schema: public
+    tables:
+      - name: weatherdesc
+      - name: weather
+      - name: cancel
+      - name: state
+      - name: city
+      - name: flights
+
+models:
+  - name: gold_flights
+    description: "Table Gold pour la prédiction des retards de vols"
+
+    columns:
+      - name: id_flight
+        description: "Identifiant unique du vol"
+        tests:
+          - unique
+          - not_null
+
+      - name: flight_number
+        description: "Numéro du vol"
+        tests:
+          - not_null
+
+      - name: date_flight
+        description: "Date du vol"
+        tests:
+          - not_null
+
+      - name: day_of_week
+        description: "Jour de la semaine 1=Lundi 7=Dimanche"
+        tests:
+          - not_null
+          - accepted_values:
+              values: [1, 2, 3, 4, 5, 6, 7]
+
+      - name: day_flight
+        description: "Jour du mois 1 à 31"
+        tests:
+          - not_null
+          - accepted_values:
+              values: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31]
+
+      - name: month_flight
+        description: "Mois 1 à 12"
+        tests:
+          - not_null
+          - accepted_values:
+              values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+
+      - name: year_flight
+        description: "Année du vol"
+        tests:
+          - not_null
+
+      - name: is_weekend
+        description: "TRUE si samedi ou dimanche"
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]
+
+      - name: dep_crs_time
+        description: "Date de départ prévus"
+      
+      - name: dep_time
+        description: "Date de départ réel"
+      
+      - name: dep_delay
+        description: "Retard réel au départ"
+
+      - name: arr_crs_time
+        description: "Date d'arrivée prévus"
+      
+      - name: arr_time
+        description: "Date d'arrivée réel"
+
+      - name: arr_es_time_cor
+        description: "Heure d'arrivée estimée corrigé"
+
+      - name: arr_delay
+        description: "Retard réel à l'arrivée"
+
+      - name: estimated_duration
+        description: "Durée estimée du vol en minutes"
+
+      - name: final_duration
+        description: "Durée réel du vol en minutes"
+
+      - name: carrier_delay
+        description: "Retard en minute dû à la compagnie aérienne"
+
+      - name: weather_delay
+        description: "Retard en minute dû à la météo"
+
+      - name: nas_delay
+        description: "Retard en minute dû au controle aérien"
+
+      - name: security_delay
+        description: "Retard en minute dû au problème de sécurité"
+
+      - name: lateaircraft_delay
+        description: "Retard en minute dû au vol précédent lui même en retard"
+
+      - name: id_cancel
+        description: "Code d'annulation"
+
+      - name: name_cancel
+        description: "Description annulation"
+
+      - name: origin_id_city
+        description: "Identifiant ville départ"
+        tests:
+          - not_null
+
+      - name: origin_name_city
+        description: "Nom ville départ"
+        tests:
+          - not_null
+
+      - name: origin_id_state
+        description: "Identifiant état départ"
+
+      - name: origin_name_state
+        description: "Nom état départ"
+
+      - name: origin_latitude
+        description: "Latitude ville départ"
+
+      - name: origin_longitude
+        description: "Longitude ville départ"
+
+      - name: dest_id_city
+        description: "Identifiant ville arrivée"
+        tests:
+          - not_null
+
+      - name: dest_name_city
+        description: "Nom ville arrivée"
+        tests:
+          - not_null
+
+      - name: dest_id_state
+        description: "Identifiant état arrivée"
+
+      - name: dest_name_state
+        description: "Nom état arrivée"
+
+      - name: dest_latitude
+        description: "Latitude ville arrivée"
+
+      - name: dest_longitude
+        description: "Longitude ville arrivée"
+
+      - name: route_code
+        description: "Code route origin_dest ex: NYC01_LAX01"
+        tests:
+          - not_null
+      - name: origin_temperature
+        description: "Température départ en °C"
+
+      - name: origin_relative_humidity
+        description: "Humidité relative départ en %"
+
+      - name: origin_dewpoint
+        description: "Point de rosée départ en °C"
+
+      - name: origin_apparent_temperature
+        description: "Température ressentie départ en °C"
+
+      - name: origin_precipitation
+        description: "Précipitations départ en mm"
+
+      - name: origin_rain
+        description: "Pluie départ en mm"
+
+      - name: origin_snowfall
+        description: "Chutes de neige départ en mm"
+
+      - name: origin_snow_depth
+        description: "Épaisseur neige départ en mm"
+
+      - name: origin_wind_speed_10
+        description: "Vitesse vent départ à 10m en km/h"
+
+      - name: origin_wind_speed_100
+        description: "Vitesse vent départ à 100m en km/h"
+
+      - name: origin_wind_gusts_10
+        description: "Rafales vent départ à 10m en km/h"
+
+      - name: origin_weather_code
+        description: "Code météo départ"
+
+      - name: origin_weather_description
+        description: "Description météo départ"
+
+      - name: dest_temperature
+        description: "Température arrivée en °C"
+
+      - name: dest_relative_humidity
+        description: "Humidité relative arrivée en %"
+
+      - name: dest_dewpoint
+        description: "Point de rosée arrivée en °C"
+
+      - name: dest_apparent_temperature
+        description: "Température ressentie arrivée en °C"
+
+      - name: dest_precipitation
+        description: "Précipitations arrivée en mm"
+
+      - name: dest_rain
+        description: "Pluie arrivée en mm"
+
+      - name: dest_snowfall
+        description: "Chutes de neige arrivée en mm"
+
+      - name: dest_snow_depth
+        description: "Épaisseur neige arrivée en mm"
+
+      - name: dest_wind_speed_10
+        description: "Vitesse vent arrivée à 10m en km/h"
+
+      - name: dest_wind_speed_100
+        description: "Vitesse vent arrivée à 100m en km/h"
+
+      - name: dest_wind_gusts_10
+        description: "Rafales vent arrivée à 10m en km/h"
+
+      - name: dest_weather_code
+        description: "Code météo arrivée"
+
+      - name: dest_weather_description
+        description: "Description météo arrivée"
+
+      - name: is_delayed
+        description: "TRUE si retard > 1 min"
+        tests:
+          - accepted_values:
+              values: [true, false]
+
+
