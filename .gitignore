@@ -1,31 +1,20 @@
-.env
-.env_airlines
-.env.prod
-demo.py
-__pycache__
+# Folders
 EnvAirlines
-venv/
-env_projet/
-datasets/
-.DS_Store
-env_projet
+saved_models
+media
 logs
-EnvAirlines
-saved_models/
-app/api/.env_airline_api
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
+DBT/logs/
 
-app/front/node_modules
-app/front/dist
-app/front/dist-ssr
-*.local
+
+# Files
+.env
+*.log
+*.logs
+
+
+# Pyhton
+__pycache__
+
 
 # Editor directories and files
 .vscode/*
@@ -37,4 +26,3 @@ app/front/dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
